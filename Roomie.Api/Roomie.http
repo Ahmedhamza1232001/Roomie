@@ -1,0 +1,6 @@
+@Roomie_HostAddress = http://localhost:5266
+
+GET {{Roomie_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
