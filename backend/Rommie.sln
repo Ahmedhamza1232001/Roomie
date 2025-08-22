@@ -1,0 +1,64 @@
+
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{A89D38C0-0F2C-4F89-A8C9-6458FEF4E094}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{13E98AAD-6BD7-45D2-8808-DBE3CF33ACB1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rommie.Domain", "src\Core\Rommie.Domain\Rommie.Domain.csproj", "{48C2A49D-CB7E-4E19-AA5D-CAFF12D96B1F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rommie.Application", "src\Core\Rommie.Application\Rommie.Application.csproj", "{4B5534F6-3E06-4D37-B949-3D4F8F724285}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "External", "External", "{7BB91FB8-1B8C-4BD3-B874-102CA7FD08A1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rommie.Infrastructure", "src\External\Rommie.Infrastructure\Rommie.Infrastructure.csproj", "{7FEE76CC-0E07-43B6-B496-09DD8F9C5468}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rommie.Persistence", "src\External\Rommie.Persistence\Rommie.Persistence.csproj", "{C5B56FAD-EE3D-46E2-9CD0-DB2A6F24EE1F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Web", "Web", "{021F2ED3-4481-4F77-8A84-FFEF9A7208DF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rommie.Api", "src\Web\Rommie.Api\Rommie.Api.csproj", "{5AEC7D6C-3650-49A9-9D91-557E706EF78A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{48C2A49D-CB7E-4E19-AA5D-CAFF12D96B1F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{48C2A49D-CB7E-4E19-AA5D-CAFF12D96B1F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{48C2A49D-CB7E-4E19-AA5D-CAFF12D96B1F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{48C2A49D-CB7E-4E19-AA5D-CAFF12D96B1F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4B5534F6-3E06-4D37-B949-3D4F8F724285}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4B5534F6-3E06-4D37-B949-3D4F8F724285}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4B5534F6-3E06-4D37-B949-3D4F8F724285}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4B5534F6-3E06-4D37-B949-3D4F8F724285}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7FEE76CC-0E07-43B6-B496-09DD8F9C5468}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7FEE76CC-0E07-43B6-B496-09DD8F9C5468}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7FEE76CC-0E07-43B6-B496-09DD8F9C5468}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7FEE76CC-0E07-43B6-B496-09DD8F9C5468}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C5B56FAD-EE3D-46E2-9CD0-DB2A6F24EE1F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C5B56FAD-EE3D-46E2-9CD0-DB2A6F24EE1F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C5B56FAD-EE3D-46E2-9CD0-DB2A6F24EE1F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C5B56FAD-EE3D-46E2-9CD0-DB2A6F24EE1F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5AEC7D6C-3650-49A9-9D91-557E706EF78A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5AEC7D6C-3650-49A9-9D91-557E706EF78A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5AEC7D6C-3650-49A9-9D91-557E706EF78A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5AEC7D6C-3650-49A9-9D91-557E706EF78A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{13E98AAD-6BD7-45D2-8808-DBE3CF33ACB1} = {A89D38C0-0F2C-4F89-A8C9-6458FEF4E094}
+		{48C2A49D-CB7E-4E19-AA5D-CAFF12D96B1F} = {13E98AAD-6BD7-45D2-8808-DBE3CF33ACB1}
+		{4B5534F6-3E06-4D37-B949-3D4F8F724285} = {13E98AAD-6BD7-45D2-8808-DBE3CF33ACB1}
+		{7BB91FB8-1B8C-4BD3-B874-102CA7FD08A1} = {A89D38C0-0F2C-4F89-A8C9-6458FEF4E094}
+		{7FEE76CC-0E07-43B6-B496-09DD8F9C5468} = {7BB91FB8-1B8C-4BD3-B874-102CA7FD08A1}
+		{C5B56FAD-EE3D-46E2-9CD0-DB2A6F24EE1F} = {7BB91FB8-1B8C-4BD3-B874-102CA7FD08A1}
+		{021F2ED3-4481-4F77-8A84-FFEF9A7208DF} = {A89D38C0-0F2C-4F89-A8C9-6458FEF4E094}
+		{5AEC7D6C-3650-49A9-9D91-557E706EF78A} = {021F2ED3-4481-4F77-8A84-FFEF9A7208DF}
+	EndGlobalSection
+EndGlobal
