@@ -60,7 +60,7 @@ public class ProcessOutboxJob(
     {
         string query =
         $"""
-        SELECT TOP {options.Value.BatchSize}
+        SELECT
         id AS {nameof(OutboxMessage.Id)},
         type AS {nameof(OutboxMessage.Type)},
         content AS {nameof(OutboxMessage.Content)},
@@ -68,9 +68,10 @@ public class ProcessOutboxJob(
         processed_on_utc AS {nameof(OutboxMessage.ProcessedOnUtc)},
         error AS Error
         FROM outbox_messages
-        WITH (UPDLOCK, ROWLOCK)
         WHERE processed_on_utc IS NULL
         ORDER BY "occurred_on_utc"
+        FOR UPDATE
+        LIMIT {options.Value.BatchSize}
         """;
         var OutboxMessages = await connection.QueryAsync<OutboxMessage>(query, new { }, dbTransaction);
         return [.. OutboxMessages];

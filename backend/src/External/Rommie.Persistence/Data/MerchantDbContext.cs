@@ -12,6 +12,6 @@ public class MerchantDbContext(DbContextOptions<MerchantDbContext> options) : Db
     public virtual DbSet<OutboxConsumerMessage> OutboxConsumerMessages { get; set; }
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.ApplyConfigurationsFromAssembly(Merchant.Persistence.AssemblyRefrence.Assembly);
+        modelBuilder.ApplyConfigurationsFromAssembly(Rommie.Persistence.AssemblyRefrence.Assembly);
     }
 }

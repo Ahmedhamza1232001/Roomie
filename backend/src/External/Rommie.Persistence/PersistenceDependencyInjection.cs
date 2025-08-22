@@ -1,4 +1,3 @@
-using System.Xml.XPath;
 using Rommie.Application.Abstractions;
 using Rommie.Application.Repositories;
 using Rommie.Domain.Abstractions;
@@ -17,11 +16,11 @@ public static class PersistenceDependencyInjection
 {
     public static IServiceCollection AddPersistence(this IServiceCollection services, IConfiguration configuration)
     {
-        string dbConnectionString = configuration.GetConnectionString("TestConnection")!;
+        string dbConnectionString = configuration.GetConnectionString("RommieDb")!;
         services.AddDbContext<MerchantDbContext>((sp, options) =>
         {
             options
-                .UseSqlServer(dbConnectionString, op => op.MigrationsAssembly(Rommie.Persistence.AssemblyRefrence.Assembly))
+                .UseNpgsql(dbConnectionString, op => op.MigrationsAssembly(Rommie.Persistence.AssemblyRefrence.Assembly))
                 .UseSnakeCaseNamingConvention()
                 .AddInterceptors(sp.GetRequiredService<PublishOutboxMessagesInterceptor>());
         });

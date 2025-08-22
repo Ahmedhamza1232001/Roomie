@@ -1,5 +1,5 @@
 using System.Data.Common;
-using Microsoft.Data.SqlClient;
+using Npgsql;
 using Rommie.Application.Abstractions;
 
 namespace Rommie.Persistence.Data
@@ -8,7 +8,7 @@ namespace Rommie.Persistence.Data
     {
         public async Task<DbConnection> CreateSqlConnection()
         {
-            var connection = new SqlConnection(ConnectionString);
+            var connection = new NpgsqlConnection(ConnectionString);
             await connection.OpenAsync();
             return connection;
         }

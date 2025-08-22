@@ -1,55 +1,55 @@
 version: '3.9'
 
 services:
-  merchant.database:
+  rommie.database:
     image: postgres
-    container_name: Merchant.Database
+    container_name: Rommie.Database
     environment:
-      - POSTGRES_DB=merchant
+      - POSTGRES_DB=rommie
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
     volumes:
       - .containers/postgresql/data/:/var/lib/postgresql/data
     ports:
       - "5432:5432"
-  merchant.identity:
+  rommie.identity:
     image: quay.io/keycloak/keycloak:latest
-    container_name: Merchant.Identity
+    container_name: Rommie.Identity
     command: start-dev --import-realm
     environment:
       - KEYCLOAK_ADMIN=admin
       - KEYCLOAK_ADMIN_PASSWORD=admin
       - KC_DB=postgres
-      - KC_DB_URL=jdbc:postgresql://merchant.database:5432/merchant
+      - KC_DB_URL=jdbc:postgresql://rommie.database:5432/rommie?currentSchema=public
       - KC_DB_USERNAME=postgres
       - KC_DB_PASSWORD=postgres
       - KC_HEALTH_ENABLED=true
       - KC_METRICS_ENABLED=true
     depends_on:
-      - merchant.database
+      - rommie.database
     volumes:
       - ./containers/keycloak/data:/opt/keycloak/data
       - ./files:/opt/keycloak/data/import
     ports:
       - 18080:8080
-  merchant.api:
+  rommie.api:
     build:
       context: ./backend
       dockerfile: Dockerfile
-    container_name: Merchant.Api
+    container_name: Rommie.Api
     env_file:
       - .env
     ports:
       - "5000:8080"
-  merchant.pgadmin:
+  rommie.pgadmin:
     image: dpage/pgadmin4
-    container_name: Merchant.PgAdmin
+    container_name: Rommie.PgAdmin
     environment:
       - PGADMIN_DEFAULT_EMAIL=admin@admin.com
       - PGADMIN_DEFAULT_PASSWORD=admin
     ports:
       - "5050:80"
     depends_on:
-      - merchant.database
+      - rommie.database
     volumes:
       - ./containers/pgadmin:/var/lib/pgadmin

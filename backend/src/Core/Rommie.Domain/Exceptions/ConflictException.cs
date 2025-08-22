@@ -4,7 +4,7 @@ using System.Linq;
 using System.Reflection.Metadata.Ecma335;
 using System.Text;
 using System.Threading.Tasks;
-using Merchant.Domain.Abstractions;
+using Rommie.Domain.Abstractions;
 
 namespace Rommie.Domain.Exceptions
 {
