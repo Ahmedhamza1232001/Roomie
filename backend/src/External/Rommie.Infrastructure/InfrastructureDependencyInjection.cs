@@ -12,13 +12,18 @@ public static class InfrastructureDependencyInjection
     public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
     {
         services.Configure<KeyCloakOptions>(configuration.GetSection("KeyCloak"));
-        services.AddTransient<KeyCloakAuthDelegatingHandler>();
-        services.AddHttpClient<KeyCloakClient>((sp, client) =>
+        services.AddTransient<AdminKeyCloakAuthDelegatingHandler>();
+        services.AddHttpClient<AdminKeyCloakClient>((sp, client) =>
         {
             KeyCloakOptions options = sp.GetRequiredService<IOptions<KeyCloakOptions>>().Value;
             client.BaseAddress = new Uri(options.AdminUrl);
         })
-        .AddHttpMessageHandler<KeyCloakAuthDelegatingHandler>();
+        .AddHttpMessageHandler<AdminKeyCloakAuthDelegatingHandler>();
+        services.AddHttpClient<TokenKeyCloackCLient>((sp, client) =>
+        {
+            KeyCloakOptions options = sp.GetRequiredService<IOptions<KeyCloakOptions>>().Value;
+            client.BaseAddress = new Uri(options.TokenUrl);
+        });
         services.AddTransient<IIdentityProviderService, IdentityProviderService>();
         services.AddAuthenticationInternal();
         return services;

@@ -1,10 +1,12 @@
 ﻿using System.Net.Http.Json;
+using Microsoft.Extensions.Options;
 using Rommie.Infrastructure.Identity.Representations.Requests;
 
 namespace Rommie.Infrastructure.Identity;
 
-internal sealed class KeyCloakClient(HttpClient httpClient)
+internal sealed class AdminKeyCloakClient(HttpClient httpClient, IOptions<KeyCloakOptions> options)
 {
+    private readonly KeyCloakOptions _options = options.Value;
     internal async Task<string> RegisterUserAsync(UserRepresentation user, CancellationToken cancellationToken = default)
     {
         HttpResponseMessage httpResponseMessage = await httpClient.PostAsJsonAsync(
@@ -15,13 +17,6 @@ internal sealed class KeyCloakClient(HttpClient httpClient)
         httpResponseMessage.EnsureSuccessStatusCode();
 
         return ExtractIdentityIdFromLocationHeader(httpResponseMessage);
-    }
-    internal async Task LoginUserAsync(string email, string password, CancellationToken cancellationToken = default)
-    {
-        HttpResponseMessage httpResponseMessage = await httpClient.PostAsJsonAsync(
-            "users",
-            new { email, password },
-            cancellationToken);
     }
     private static string ExtractIdentityIdFromLocationHeader(
         HttpResponseMessage httpResponseMessage)

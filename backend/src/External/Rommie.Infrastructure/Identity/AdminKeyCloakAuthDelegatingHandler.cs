@@ -5,10 +5,9 @@ using Microsoft.Extensions.Options;
 
 namespace Rommie.Infrastructure.Identity;
 
-internal sealed class KeyCloakAuthDelegatingHandler(IOptions<KeyCloakOptions> options) : DelegatingHandler
+internal sealed class AdminKeyCloakAuthDelegatingHandler(IOptions<KeyCloakOptions> options) : DelegatingHandler
 {
     private readonly KeyCloakOptions _options = options.Value;
-
     protected override async Task<HttpResponseMessage> SendAsync(
         HttpRequestMessage request,
         CancellationToken cancellationToken)

@@ -4,18 +4,24 @@ using Rommie.Domain.Exceptions;
 using Microsoft.Extensions.Logging;
 using Rommie.Infrastructure.Identity.Representations;
 using Rommie.Infrastructure.Identity.Representations.Requests;
+using Microsoft.Extensions.Options;
+using Rommie.Application.Dtos.Responses;
 
 namespace Rommie.Infrastructure.Identity;
 
-internal sealed class IdentityProviderService(KeyCloakClient keyCloakClient, ILogger<IdentityProviderService> logger)
+internal sealed class IdentityProviderService(AdminKeyCloakClient adminKeyCloakClient, TokenKeyCloackCLient tokenKeyCloackCLient, ILogger<IdentityProviderService> logger)
     : IIdentityProviderService
 {
-    private const string PasswordCredentialType = "password";
-
     // POST /admin/realms/{realm}/users
-    public async Task<string> AuthenticateUserAsync(string email, string password, CancellationToken cancellationToken = default)
+    public async Task<LoginUserResponse> LoginUserAsync(string email, string password, CancellationToken cancellationToken = default)
     {
-        throw new NotImplementedException();
+
+        var authResponse = await tokenKeyCloackCLient.LoginUserAsync(email, password, cancellationToken);
+        return new LoginUserResponse()
+        {
+            AccessToken = authResponse.AccessToken,
+            RefreshToken = authResponse.RefreshToken
+        };
     }
     public async Task<string> RegisterUserAsync(UserModel user, CancellationToken cancellationToken = default)
     {
@@ -26,16 +32,16 @@ internal sealed class IdentityProviderService(KeyCloakClient keyCloakClient, ILo
             user.LastName,
             true,
             true,
-            [new CredentialRepresentation(PasswordCredentialType, user.Password, false)]);
+            [new CredentialRepresentation("password", user.Password, false)]);
 
         try
         {
-            string identityId = await keyCloakClient.RegisterUserAsync(userRepresentation, cancellationToken);
+            string identityId = await adminKeyCloakClient.RegisterUserAsync(userRepresentation, cancellationToken);
             return identityId;
         }
         catch (HttpRequestException exception) when (exception.StatusCode == HttpStatusCode.Conflict)
         {
-            logger.LogError(exception, "User registration failed");
+            logger.LogError("User registration failed {exception}", exception);
             throw new ConflictException("User.Conflict.Email", user.Email);
         }
     }

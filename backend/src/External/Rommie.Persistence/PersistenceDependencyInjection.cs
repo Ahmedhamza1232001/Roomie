@@ -34,7 +34,7 @@ public static class PersistenceDependencyInjection
         // adding quartz for background jobs 
         services.AddQuartz();
         services.AddQuartzHostedService(options => options.WaitForJobsToComplete = true);
-        services.ConfigureOptions<ConfigureProcessOutboxJob>();
+        // services.ConfigureOptions<ConfigureProcessOutboxJob>();
         return services;
     }
 }

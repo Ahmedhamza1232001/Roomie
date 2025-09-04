@@ -2,6 +2,7 @@ using System.Text.Json;
 using Rommie.Application.Dtos.Requests;
 using Rommie.Application.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using Rommie.Application.Dtos.Responses;
 
 namespace Rommie.Api.Controllers.v1
 {
@@ -17,6 +18,10 @@ namespace Rommie.Api.Controllers.v1
             logger.LogInformation("CreateUser succeeded with UserId: {UserId}", userid);
             return Ok(userid);
         }
-
+        [HttpPost("login")]
+        public async Task<ActionResult<LoginUserResponse>> LoginUser([FromBody] LoginUserRequestDto requestDto)
+        {
+            return Ok(await userService.LoginUserAsync(requestDto.Email, requestDto.Password));
+        }
     }
 }

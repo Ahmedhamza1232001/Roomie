@@ -2,6 +2,7 @@ using Microsoft.Extensions.Logging;
 using Rommie.Application.Abstractions;
 using Rommie.Application.Abstractions.Identity;
 using Rommie.Application.Dtos.Requests;
+using Rommie.Application.Dtos.Responses;
 using Rommie.Application.Interfaces;
 using Rommie.Application.Repositories;
 using Rommie.Domain.Entities;
@@ -32,9 +33,9 @@ public class UserService(
         return user.Id;
     }
 
-    public Task<(string accessToken, string refreshToken)> LoginUserAsync(string email, string Password, CancellationToken cancellationToken = default)
+    public async Task<LoginUserResponse> LoginUserAsync(string email, string Password, CancellationToken cancellationToken = default)
     {
-        throw new NotImplementedException();
+        return await identityProviderService.LoginUserAsync(email, Password, cancellationToken);
     }
 
 }
