@@ -1,5 +1,5 @@
 ﻿using System.Net.Http.Json;
-using Rommie.Infrastructure.Identity.Reporesentations;
+using Rommie.Infrastructure.Identity.Representations.Requests;
 
 namespace Rommie.Infrastructure.Identity;
 
@@ -16,36 +16,13 @@ internal sealed class KeyCloakClient(HttpClient httpClient)
 
         return ExtractIdentityIdFromLocationHeader(httpResponseMessage);
     }
-
-    internal async Task AddRolesToUserAsync(string userIdentifier, ICollection<RoleRepresentation> roleRepresentations, CancellationToken cancellationToken = default)
+    internal async Task LoginUserAsync(string email, string password, CancellationToken cancellationToken = default)
     {
-        var requestUri = $"users/{userIdentifier}/role-mappings/realm";
         HttpResponseMessage httpResponseMessage = await httpClient.PostAsJsonAsync(
-            requestUri,
-            roleRepresentations,
+            "users",
+            new { email, password },
             cancellationToken);
-
-        httpResponseMessage.EnsureSuccessStatusCode();
     }
-
-    internal async Task RemoveRolesFromUserAsync(string userIdentifier, ICollection<RoleRepresentation> roleRepresentations, CancellationToken cancellationToken = default)
-    {
-        var requestUri = $"users/{userIdentifier}/role-mappings/realm";
-
-        // Create the JSON content manually
-        var content = JsonContent.Create(roleRepresentations);
-
-        // Construct DELETE request with body
-        var request = new HttpRequestMessage(HttpMethod.Delete, requestUri)
-        {
-            Content = content
-        };
-
-        HttpResponseMessage httpResponseMessage = await httpClient.SendAsync(request, cancellationToken);
-
-        httpResponseMessage.EnsureSuccessStatusCode();
-    }
-
     private static string ExtractIdentityIdFromLocationHeader(
         HttpResponseMessage httpResponseMessage)
     {

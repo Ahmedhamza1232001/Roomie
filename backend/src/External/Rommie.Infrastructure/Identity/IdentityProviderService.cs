@@ -1,8 +1,9 @@
 ﻿using System.Net;
 using Rommie.Application.Abstractions.Identity;
 using Rommie.Domain.Exceptions;
-using Rommie.Infrastructure.Identity.Reporesentations;
 using Microsoft.Extensions.Logging;
+using Rommie.Infrastructure.Identity.Representations;
+using Rommie.Infrastructure.Identity.Representations.Requests;
 
 namespace Rommie.Infrastructure.Identity;
 
@@ -12,6 +13,10 @@ internal sealed class IdentityProviderService(KeyCloakClient keyCloakClient, ILo
     private const string PasswordCredentialType = "password";
 
     // POST /admin/realms/{realm}/users
+    public async Task<string> AuthenticateUserAsync(string email, string password, CancellationToken cancellationToken = default)
+    {
+        throw new NotImplementedException();
+    }
     public async Task<string> RegisterUserAsync(UserModel user, CancellationToken cancellationToken = default)
     {
         var userRepresentation = new UserRepresentation(
@@ -32,18 +37,6 @@ internal sealed class IdentityProviderService(KeyCloakClient keyCloakClient, ILo
         {
             logger.LogError(exception, "User registration failed");
             throw new ConflictException("User.Conflict.Email", user.Email);
-        }
-    }
-    public Task ToggleTwoFactorAuthenticationAsync(string userIdentitfier, bool enable, CancellationToken cancellationToken = default)
-    {
-        ICollection<RoleRepresentation> userRolesRepresentations = [new RoleRepresentation("b0f9fabe-8199-40bb-99e0-950a65727b99", "tfa_enabled")];
-        if (enable)
-        {
-            return keyCloakClient.AddRolesToUserAsync(userIdentitfier, userRolesRepresentations, cancellationToken);
-        }
-        else
-        {
-            return keyCloakClient.RemoveRolesFromUserAsync(userIdentitfier, userRolesRepresentations, cancellationToken);
         }
     }
 }

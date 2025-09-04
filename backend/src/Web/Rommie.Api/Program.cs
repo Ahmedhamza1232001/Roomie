@@ -24,7 +24,6 @@ builder.Services.AddSwaggerGen(c =>
         BearerFormat = "JWT"
     });
 
-    // Apply security to all operations
     c.AddSecurityRequirement(new Microsoft.OpenApi.Models.OpenApiSecurityRequirement
     {
         {
@@ -36,17 +35,16 @@ builder.Services.AddSwaggerGen(c =>
                     Id = "Bearer"
                 }
             },
-            new string[] {} // You can also specify scopes here if needed
+            new string[] {}
         }
     });
 });
 
 builder.Services.AddControllers();
-
 builder.Services.AddApplication();
-builder.Services.AddLocalization();
 builder.Services.AddPersistence(builder.Configuration);
 builder.Services.AddInfrastructure(builder.Configuration);
+builder.Services.AddLocalization();
 
 var app = builder.Build();
 
@@ -64,8 +62,9 @@ app.UseRequestLocalization(new RequestLocalizationOptions
     SupportedCultures = [new CultureInfo("en"), new CultureInfo("ar")],
     SupportedUICultures = [new CultureInfo("en"), new CultureInfo("ar")]
 });
-app.MapControllers();
+
 app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
+app.MapControllers();
 app.Run();
