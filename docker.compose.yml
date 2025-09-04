@@ -48,17 +48,3 @@ services:
       - .env
     ports:
       - "5000:8080"
-  rommie.pgadmin:
-    image: dpage/pgadmin4
-    container_name: Rommie.PgAdmin
-    environment:
-      - PGADMIN_DEFAULT_EMAIL=admin@admin.com
-      - PGADMIN_DEFAULT_PASSWORD=admin
-    ports:
-      - "5050:80"
-    depends_on:
-      - rommie.database
-    volumes:
-      - ./containers/pgadmin:/var/lib/pgadmin
-    mem_limit: 128m
-    cpus: 0.10
