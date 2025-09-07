@@ -5,17 +5,19 @@ namespace Rommie.Domain.Entities;
 
 public class User : Entity
 {
-    public Guid Id { get; private set; }
-    public string Email { get; private set; } = string.Empty;
-    public string FirstName { get; private set; } = string.Empty;
-    public string LastName { get; private set; } = string.Empty;
-    public string IdentityProviderId { get; private set; } = string.Empty;
-    public bool TwoFactorEnabled { get; private set; } = false;
+    public Guid Id { get; set; }
+    public string Email { get; set; } = string.Empty;
+    public string FirstName { get; set; } = string.Empty;
+    public string LastName { get; set; } = string.Empty;
+    public string IdentityProviderId { get; set; } = string.Empty;
+    public bool TwoFactorEnabled { get; set; } = false;
+    public bool IsVerified { get; set; } = false;
+    public virtual ICollection<UserVerificationRequest> VerificationRequests { get; set; } = [];
     public static User Create(string email, string firstName, string lastName, string identityProviderId)
     {
         var user = new User
         {
-            Id = Guid.NewGuid(),
+            Id = Guid.Parse(identityProviderId),
             Email = email,
             FirstName = firstName,
             LastName = lastName,
@@ -24,22 +26,5 @@ public class User : Entity
         };
         user.RaiseDomainEvent(new UserCreatedDomainEvent(user.Id));
         return user;
-    }
-
-    public void Update(string? firstName, string? lastName)
-    {
-        if (!string.IsNullOrEmpty(firstName))
-        {
-            FirstName = firstName;
-        }
-        if (!string.IsNullOrEmpty(lastName))
-        {
-            LastName = lastName;
-        }
-        RaiseDomainEvent(new UserUpdatedDomainEvent(Id));
-    }
-    public void ToggleTwoFactorAuthentication()
-    {
-        TwoFactorEnabled = !TwoFactorEnabled;
     }
 }

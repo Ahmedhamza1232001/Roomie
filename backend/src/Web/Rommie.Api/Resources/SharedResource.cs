@@ -1,6 +1,12 @@
-namespace Rommie.Api.Resources;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
-public class SharedResource
+namespace Rommie.Api.Resources
 {
+    public class SharedResource
+    {
 
+    }
 }

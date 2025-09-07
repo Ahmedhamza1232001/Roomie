@@ -4,6 +4,7 @@ using Rommie.Infrastructure.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
+using Microsoft.AspNetCore.Authentication;
 
 namespace Rommie.Infrastructure;
 
@@ -25,6 +26,7 @@ public static class InfrastructureDependencyInjection
             client.BaseAddress = new Uri(options.TokenUrl);
         });
         services.AddTransient<IIdentityProviderService, IdentityProviderService>();
+        services.AddScoped<IClaimsTransformation, KeyCloackClaimsTransformation>();
         services.AddAuthenticationInternal();
         return services;
     }

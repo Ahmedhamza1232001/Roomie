@@ -11,7 +11,21 @@ services:
     volumes:
       - .containers/postgresql/data/:/var/lib/postgresql/data
     ports:
-      - "5432:5432"
+      - "15432:5432"
+    mem_limit: 256m
+    cpus: 0.25
+
+  rommie.identity.database:
+    image: postgres
+    container_name: Rommie.Identity.Database
+    environment:
+      - POSTGRES_DB=rommie_identity
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    volumes:
+      - .containers/postgresql/identity_data/:/var/lib/postgresql/data
+    ports:
+      - "25433:5432"
     mem_limit: 256m
     cpus: 0.25
 
@@ -23,7 +37,7 @@ services:
       - KEYCLOAK_ADMIN=admin
       - KEYCLOAK_ADMIN_PASSWORD=admin
       - KC_DB=postgres
-      - KC_DB_URL=jdbc:postgresql://rommie.database:5432/rommie?currentSchema=public
+      - KC_DB_URL=jdbc:postgresql://rommie.identity.database:5432/rommie_identity?currentSchema=public
       - KC_DB_USERNAME=postgres
       - KC_DB_PASSWORD=postgres
       - KC_HEALTH_ENABLED=true

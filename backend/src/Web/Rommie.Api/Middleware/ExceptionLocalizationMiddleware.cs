@@ -1,18 +1,13 @@
-using Rommie.Api.Resources;
 using Rommie.Domain.Abstractions;
-using Microsoft.Extensions.Localization;
 
 namespace Rommie.Api.Middleware;
 
 public class ExceptionLocalizationMiddleware
 {
     private readonly RequestDelegate _next;
-    private readonly IStringLocalizer<SharedResource> _localizer;
-
-    public ExceptionLocalizationMiddleware(RequestDelegate next, IStringLocalizer<SharedResource> localizer)
+    public ExceptionLocalizationMiddleware(RequestDelegate next)
     {
         _next = next;
-        _localizer = localizer;
     }
 
     public async Task Invoke(HttpContext context)
@@ -24,8 +19,7 @@ public class ExceptionLocalizationMiddleware
         catch (LocalizedHttpException ex)
         {
             var key = $"{ex.ErrorCode}_{ex.StatusCode}";
-            var localizedMessage = _localizer[key, ex.MessageArgs];
-
+            var localizedMessage = key + " " + String.Join(", ", ex.MessageArgs);
             context.Response.StatusCode = ex.StatusCode;
             context.Response.ContentType = "application/json";
 
@@ -33,7 +27,7 @@ public class ExceptionLocalizationMiddleware
             {
                 code = ex.ErrorCode,
                 status = ex.StatusCode,
-                message = localizedMessage.Value
+                message = localizedMessage
             });
         }
         catch (Exception)
@@ -45,7 +39,7 @@ public class ExceptionLocalizationMiddleware
             {
                 code = "INTERNAL_ERROR",
                 status = 500,
-                message = _localizer["INTERNAL_ERROR_500"]
+                message = "INTERNAL_ERROR_500"
             });
         }
     }

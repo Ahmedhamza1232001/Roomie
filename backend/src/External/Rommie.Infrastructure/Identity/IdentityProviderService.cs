@@ -23,6 +23,18 @@ internal sealed class IdentityProviderService(AdminKeyCloakClient adminKeyCloakC
             RefreshToken = authResponse.RefreshToken
         };
     }
+
+    public Task<LoginUserResponse> RefreshUserAsync(string token, CancellationToken cancellationToken = default)
+    {
+        var authResponse = tokenKeyCloackCLient.RefreshTokenAsync(token, cancellationToken);
+        return Task.FromResult(new LoginUserResponse()
+        {
+            AccessToken = authResponse.Result.AccessToken,
+            RefreshToken = authResponse.Result.RefreshToken
+        });
+    }
+
+
     public async Task<string> RegisterUserAsync(UserModel user, CancellationToken cancellationToken = default)
     {
         var userRepresentation = new UserRepresentation(

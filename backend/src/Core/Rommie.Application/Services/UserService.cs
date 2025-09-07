@@ -38,4 +38,11 @@ public class UserService(
         return await identityProviderService.LoginUserAsync(email, Password, cancellationToken);
     }
 
+    public async Task<LoginUserResponse> RefreshUserAsnc(RefreshTokenRequestDto refreshTokenRequestDto, CancellationToken cancellationToken = default)
+    {
+        return await identityProviderService.RefreshUserAsync(refreshTokenRequestDto.Token, cancellationToken);
+    }
+
+
+
 }

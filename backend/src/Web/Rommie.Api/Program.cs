@@ -1,8 +1,6 @@
-using System.Globalization;
 using Rommie.Persistence;
 using Rommie.Application;
 using Rommie.Infrastructure;
-using Microsoft.AspNetCore.Localization;
 using Rommie.Api.Middleware;
 using Rommie.Api.Extensions;
 
@@ -39,15 +37,13 @@ builder.Services.AddSwaggerGen(c =>
         }
     });
 });
-
 builder.Services.AddControllers();
 builder.Services.AddApplication();
 builder.Services.AddPersistence(builder.Configuration);
 builder.Services.AddInfrastructure(builder.Configuration);
-builder.Services.AddLocalization();
-
+builder.Services.AddHttpContextAccessor();
 var app = builder.Build();
-
+app.UseStaticFiles();
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -56,13 +52,6 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseMiddleware<ExceptionLocalizationMiddleware>();
-app.UseRequestLocalization(new RequestLocalizationOptions
-{
-    DefaultRequestCulture = new RequestCulture("en"),
-    SupportedCultures = [new CultureInfo("en"), new CultureInfo("ar")],
-    SupportedUICultures = [new CultureInfo("en"), new CultureInfo("ar")]
-});
-
 app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
